@@ -1,0 +1,28 @@
+{
+  "name": "teletask-coap",
+  "version": "0.0.1",
+  "description": "Teletask coap support",
+  "main": "index.js",
+  "dependencies": {
+    "coap": "^0.12.0",
+    "teletask-api": "0.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sillevl/teletask-coap.git"
+  },
+  "keywords": [
+    "teletask",
+    "coap"
+  ],
+  "author": "Sille Van Landschoot",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sillevl/teletask-coap/issues"
+  },
+  "homepage": "https://github.com/sillevl/teletask-coap#readme"
+}
