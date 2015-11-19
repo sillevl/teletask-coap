@@ -2,14 +2,14 @@
   "name": "teletask-coap",
   "version": "0.0.1",
   "description": "Teletask coap support",
-  "main": "index.js",
+  "main": "teletask-coap.js",
   "dependencies": {
     "coap": "^0.12.0",
-    "teletask-api": "0.0.2"
+    "node-teletask": "0.0.2-c"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",

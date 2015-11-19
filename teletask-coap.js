@@ -1,40 +1,66 @@
-var server      = require('coap').createServer()
+var coap = require('coap')
 
-var HOST = '192.168.1.5';
-var PORT = 55957;
 
-var Teletask = require('teletask-api');
+exports = module.exports = createApplication;
 
-var teletask = new Teletask.connect(HOST,PORT, function(){
-  console.log("Teletask Ready")
-});
+function createApplication() {
 
-Relais = new function(){
-  this.get = function(number, callback){
-    teletask.get(Teletask.functions.relay, 21, function(data){
-			console.log('done with 21 ' + data)
-      callback(data)
-		});
+  var app = function(req, res, next) {
+    app.handle(req, res, next);
+  };
+
+  var server;
+
+  var root;
+
+  app.listen = function(){
+    server = coap.createServer();
+    server.on('request', function(req, res) {
+      console.log("request....")
+      root(req, res);
+    });
+    return server;
   }
-  this.put = function(number, argument){}
+
+  app.get = function(path, callback){
+    console.log("adding path: " + path + " to router")
+    root = callback;
+  }
+
+  app.route = function(){
+    return this;
+  }
+
+  app.post = function(){
+    return this;
+  }
+
+  app.use = function(){
+    return this;
+  }
+
+  return app;
 }
 
-server.on('request', function(req, res) {
-  var url = req.url.split('/')
-  var resource = url[1]
-  var number = url[2]
-  var argument = url[3]
-  console.log("Resource: " + resource + " number: " + number + " arg: " + argument)
-  Relais.get(number, function(data){
-    res.end('Hello ' + data + '\n')
-  })
 
 
-})
+// Relais = new function(){
+//   this.get = function(number, callback){
+//     teletask.get(Teletask.functions.relay, number, function(data){
+//       callback(data)
+// 		});
+//   }
+//   this.put = function(number, argument){}
+// }
 
-// the default CoAP port is 5683
-server.listen(function() {
-  console.log("Coap ready")
-})
-
-module.exports = server;
+// var buildCoreFormat = function(config){
+//   var coreFormat
+//   for (var resource in config.resources){
+//     if (config.resources.hasOwnProperty(resource)) {
+//          for(var item in config.resources[resource]){
+//             coreFormat += "</"+resource+"/"+config.resources[resource][item].number+">;title=\""+config.resources[resource][item].description+"\","
+//          }
+//     }
+//   }
+//   return coreFormat
+// }

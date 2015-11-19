@@ -1,0 +1,44 @@
+{
+     "host": "192.168.1.5"
+    ,"port": 55957
+    ,"type": "TDS 10010: MICROS"
+    ,"name": "Teletask centrale"
+    ,"resources": {
+        "relay": [
+             {"number":  1, "description": "L01: bedroom 1", "type":"light"}
+            ,{"number":  2, "description": "L02: kitchen"}
+            ,{"number":  21, "description": "Keuken"}
+            ,{"number":  46, "description": "Bureau"}
+        ]
+        ,"motor": [
+             {"number": 0,  "description": "Screen cinema"}
+            ,{"number": 1, "description": "Screen Office"}
+            ,{"number": 2, "description": "Screen Livingroom"}
+            ,{"number": 3, "description": "Screen Parent Bedroom"}
+        ]
+        ,"localmood": [
+             {"number":  7, "description": "Have Dinner"}
+            ,{"number":  8, "description": "Cooking"}
+            ,{"number": 10, "description": "All screens up"}
+            ,{"number": 11, "description": "All screens down"}
+        ]
+        ,"generalmood": [
+             {"number": 0, "description": "All lights off"}
+            ,{"number": 1, "description": "Panic (all lights on)"}
+            ,{"number": 2, "description": "Sleep (selected lights off)"}
+        ]
+        ,"condition": [
+            {"number": 0, "description": "Is it dark outside?"}
+        ]
+        ,"flag": [
+            {"number": 0, "description": "Is it dark outside?"}
+        ]
+        ,"sensor": [
+            {"number": 0, "description": "Light sensor", "type": "LIGHT"}
+        ]
+    },
+    "rooms": [
+         {"id":1, "level":0, "name": "Hallway", "components": {"RELAY": [27,34]}}
+        ,{"id":2, "level":0, "name": "Kitchen", "components": {"RELAY": [20,23,31,38],"LOCMOOD": [7,8]}}
+    ]
+}
