@@ -1,4 +1,4 @@
-var coap = require('coap')
+var coap = require('coap');
 
 
 exports = module.exports = createApplication;
@@ -16,28 +16,28 @@ function createApplication() {
   app.listen = function(){
     server = coap.createServer();
     server.on('request', function(req, res) {
-      console.log("request....")
+      console.log("request....");
       root(req, res);
     });
     return server;
-  }
+  };
 
   app.get = function(path, callback){
-    console.log("adding path: " + path + " to router")
+    console.log("adding path: " + path + " to router");
     root = callback;
-  }
+  };
 
   app.route = function(){
     return this;
-  }
+  };
 
   app.post = function(){
     return this;
-  }
+  };
 
   app.use = function(){
     return this;
-  }
+  };
 
   return app;
 }
