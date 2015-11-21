@@ -25,14 +25,20 @@ router.get("/.well-known/core", function(req, res){
 });
 
 // manage relay resources
-router.route("/relay/:number")
+router.route("/:function/:number")
   .get(function(req, res){
-    teletask.get(Teletask.functions.relay, req.params.number, function(data){
+    teletask.get(Teletask.functions[req.params.function], req.params.number, function(data){
       res.end(JSON.stringify(data.value));
 		});
   })
   .post(function(req, res){
-    teletask.set(Teletask.functions.relay, req.params.number, 103);
+    // TODO give error if payload is not json and does not contain setting
+    var setting = JSON.parse(req.payload.toString()).setting
+    var value = Teletask.settings[setting]
+    teletask.set(Teletask.functions[req.params.function], req.params.number, value);
+  })
+  .all(function(req, res){
+    // TODO give error if function and number combination is not in config
   });
 
 var server = coap.createServer(function(req, res) {
