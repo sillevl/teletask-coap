@@ -1,4 +1,4 @@
-var finalhandler = require('finalhandler')
+var finalhandler = require('./lib/finalhandler')
 var coap         = require('coap')
 var Router       = require('router')
 var Teletask     = require('node-teletask')
@@ -36,6 +36,8 @@ router.route("/:function/:number")
     var setting = JSON.parse(req.payload.toString()).setting
     var value = Teletask.settings[setting]
     teletask.set(Teletask.functions[req.params.function], req.params.number, value);
+    res.code = 204; // changed
+    res.end();
   })
   .all(function(req, res){
     // TODO give error if function and number combination is not in config
