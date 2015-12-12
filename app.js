@@ -8,6 +8,18 @@ var linkFormat   = require('./lib/link-format')
 var router = Router()
 var teletask = new Teletask.connect(config.host,config.port);
 
+config.hasResource = function(func, number){
+  if(config.resources[func] === undefined) return undefined;
+  return this.findResource(func, number);
+}
+
+config.findResource = function(func, number){
+  return this.resources[func]
+    .filter(function(func){
+      return func.number == number
+    })[0];
+}
+
 router.get('/', function (req, res) {
   res.end('Teletask coap api');
 });
@@ -26,12 +38,20 @@ router.get("/.well-known/core", function(req, res){
 
 // manage relay resources
 router.route("/:function/:number")
-  .get(function(req, res){
+  .all(function(req, res, next){
+    if(config.hasResource(req.params.function, req.params.number)){
+      next();
+    }else{
+      res.code = 404;
+      res.end();
+    }
+  })
+  .get(function(req, res, next){
     teletask.get(Teletask.functions[req.params.function], req.params.number, function(data){
       res.end(JSON.stringify(data.value));
 		});
   })
-  .post(function(req, res){
+  .post(function(req, res, next){
     // TODO give error if payload is not json and does not contain setting
     var setting = JSON.parse(req.payload.toString()).setting
     var value = Teletask.settings[setting]
@@ -39,9 +59,6 @@ router.route("/:function/:number")
     res.code = 204; // changed
     res.end();
   })
-  .all(function(req, res){
-    // TODO give error if function and number combination is not in config
-  });
 
 var server = coap.createServer(function(req, res) {
   router(req, res, finalhandler(req, res))
