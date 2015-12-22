@@ -48,7 +48,7 @@ router.route("/:function/:number")
   })
   .get(function(req, res, next){
     teletask.get(Teletask.functions[req.params.function], req.params.number, function(data){
-      res.end(JSON.stringify(data.value));
+      res.end(JSON.stringify(data));
 		});
   })
   .post(function(req, res, next){
